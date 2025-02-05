@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log/slog"
 	"net/http"
 
@@ -18,7 +19,11 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/funcionarios", getFuncionario)
+	e.GET("/funcionarios", getFuncionarios)
+	e.POST("/funcionarios", createFuncionario)
+	e.GET("/funcionarios/:id", getFuncionario)
+	e.PUT("/funcionarios/:id", updateFuncionario)
+	e.DELETE("/funcionarios/:id", deleteFuncionario)
 
 	// Start server
 	if err := e.Start(":8080"); err != nil && !errors.Is(err, http.ErrServerClosed) {
@@ -27,6 +32,31 @@ func main() {
 }
 
 // Handler
+func getFuncionarios(c echo.Context) error {
+	return c.String(http.StatusOK, "Listando todos os funcionários.")
+}
+
+func createFuncionario(c echo.Context) error {
+	return c.String(http.StatusOK, "Criando funcionário.")
+}
+
 func getFuncionario(c echo.Context) error {
-	return c.String(http.StatusOK, "Listando funcionários.")
+	id := c.Param("id")
+	getFunc := fmt.Sprintf("Pegando o id do funcionário %s", id)
+	/* return c.String(http.StatusOK, "Listando funcionário.") */
+	return c.String(http.StatusOK, getFunc)
+}
+
+func updateFuncionario(c echo.Context) error {
+	id := c.Param("id")
+	upFunc := fmt.Sprintf("Atualizando o id do funcionário %s", id)
+	/* return c.String(http.StatusOK, "Atualizando funcionário.") */
+	return c.String(http.StatusOK, upFunc)
+}
+
+func deleteFuncionario(c echo.Context) error {
+	id := c.Param("id")
+	delFunc := fmt.Sprintf("Excluindo o id do funcionário %s", id)
+	/* return c.String(http.StatusOK, "Deletando funcionário.") */
+	return c.String(http.StatusOK, delFunc)
 }
