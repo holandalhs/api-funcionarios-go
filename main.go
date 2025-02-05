@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/holandalhs/api-funcionarios-go/db"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -37,6 +38,7 @@ func getFuncionarios(c echo.Context) error {
 }
 
 func createFuncionario(c echo.Context) error {
+	db.AddFuncionario()
 	return c.String(http.StatusOK, "Criando funcionário.")
 }
 
