@@ -38,7 +38,11 @@ func getFuncionarios(c echo.Context) error {
 }
 
 func createFuncionario(c echo.Context) error {
-	db.AddFuncionario()
+	funcionario := db.Funcionario{}
+	if err := c.Bind(&funcionario); err != nil {
+		return err
+	}
+	db.AddFuncionario(funcionario)
 	return c.String(http.StatusOK, "Criando funcionário.")
 }
 

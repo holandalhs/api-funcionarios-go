@@ -9,12 +9,12 @@ import (
 )
 
 type Funcionario struct {
-	gorm.Model /* para incluir os campos/estruturas abaixo na struct */
-	Nome       string
-	CPF        string
-	Email      string
-	Idade      int
-	Ativo      bool
+	gorm.Model        /* para incluir os campos/estruturas abaixo na struct */
+	Nome       string `json:"nome"`
+	CPF        string `json:"cpf"`
+	Email      string `json:"email"`
+	Idade      int    `json:"idade"`
+	Ativo      bool   `json:"registro"`
 }
 
 func Init() *gorm.DB {
@@ -29,16 +29,16 @@ func Init() *gorm.DB {
 	return db
 }
 
-func AddFuncionario() {
+func AddFuncionario(funcionario Funcionario) {
 	db := Init()
 
-	funcionario := Funcionario{
+	/* 	funcionario := Funcionario{
 		Nome:  "Rock",
 		CPF:   "68554454",
 		Email: "rock@gmail.com",
 		Idade: 3,
 		Ativo: true,
-	}
+	} */
 
 	/* result := db.Create(&funcionario)
 	if result.Error != nil {
