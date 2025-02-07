@@ -42,7 +42,9 @@ func createFuncionario(c echo.Context) error {
 	if err := c.Bind(&funcionario); err != nil {
 		return err
 	}
-	db.AddFuncionario(funcionario)
+	if err := db.AddFuncionario(funcionario); err != nil {
+		return c.String(http.StatusInternalServerError, "Erro interno do servidor")
+	}
 	return c.String(http.StatusOK, "Criando funcionário.")
 }
 

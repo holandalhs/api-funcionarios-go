@@ -29,7 +29,7 @@ func Init() *gorm.DB {
 	return db
 }
 
-func AddFuncionario(funcionario Funcionario) {
+func AddFuncionario(funcionario Funcionario) error {
 	db := Init()
 
 	/* 	funcionario := Funcionario{
@@ -47,7 +47,9 @@ func AddFuncionario(funcionario Funcionario) {
 
 	if result := db.Create(&funcionario); result.Error != nil {
 		fmt.Println("Erro ao cadastrar funcionário")
+		return result.Error
 	}
 
 	fmt.Println("Funcionário cadastrado!")
+	return nil
 }
